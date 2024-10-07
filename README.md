@@ -1,1 +1,1 @@
-# Potability-of-water
+# Potability of water
