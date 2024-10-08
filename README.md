@@ -6,13 +6,13 @@ For this purpose, we used a database for 3276 different water bodies (Kadiwal, 2
 ## Table 1
 | **Parameter**        | **Description**                                                          | **Distribution**                                                              |
 |----------------------|--------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **pH**               | Measures the acidity or alkalinity of water on a scale from 0 to 14. According to the World Health Organization, most drinking water has a pH range of approximately 6.5 to 8.5 (2007). | ![pH Distribution](Data_Distributions/pH_distribution.png)                    |
+| **pH**               | Measures the acidity or alkalinity of water on a scale from 0 to 14. According to the World Health Organization, most drinking water has a pH range of approximately 6.5 to 8.5 (2007). | ![pH Distribution](Data_Distributions/ph_distribution.png)                    |
 | **Hardness**          | Measure in mg/L of the concentration of calcium and magnesium salts in water. The U.S. Geological Survey (2018) classifies water with hardness less than 60 mg/L as soft, 61-120 mg/L as moderately hard, 121-180 mg/L as hard, and more than 180 mg/L as very hard. | ![Hardness Distribution](Data_Distributions/Hardness_distribution.png)        |
 | **Solids**            | Total dissolved solids (TDS) in water in ppm. A high TDS means the water is highly mineralized. According to the Environmental Systems Research Institute (2016), the desirable limit for TDS in potable water is 500 mg/L and the maximum limit is 1000 mg/L. | ![Solids Distribution](Data_Distributions/Solids_distribution.png)            |
 | **Chloramines**       | Compounds of chlorine and ammonia in ppm used commonly to disinfect water. Chloramine levels up to 4 milligrams per liter are considered safe. (Centers for Disease Control and Prevention, 2024)              | ![Chloramines Distribution](Data_Distributions/Chloramines_distribution.png)  |
 | **Sulfate**           | Measure of sulfate ions in water in mg/L. The U.S. Environmental Protection Agency (EPA) recommends a secondary maximum contaminant level of less than 250 mg/L for sulfate in drinking water (2019). | ![Sulfate Distribution](Data_Distributions/Sulfate_distribution.png)          |
 | **Conductivity**      | Measure of water's ability to conduct electricity in μS/cm. According to the Environmental Systems Research Institute (2016) it should be less than 400 μS/cm. High conductivity levels may indicate a high concentration of dissolved salts. | ![Conductivity Distribution](Data_Distributions/Conductivity_distribution.png)|
-| **Organic Carbon**    | Measure of organic compounds in water in ppm. | ![Organic Carbon Distribution](Data_Distributions/Organic_Carbon_distribution.png) |
+| **Organic Carbon**    | Measure of organic compounds in water in ppm. | ![Organic Carbon Distribution](Data_Distributions/Organic_carbon_distribution.png) |
 | **Trihalomethanes**   | Chemical compounds that can form during water chlorination in μg/L. | ![Trihalomethanes Distribution](Data_Distributions/Trihalomethanes_distribution.png)|
 | **Turbidity**         | Measure of water clarity in NTU (Nephelometric Turbidity Units). Turbidity indicates how clear or cloudy water is, which can be affected by the presence of suspended particles. | ![Turbidity Distribution](Data_Distributions/Turbidity_distribution.png)      |
 | **Potability**        | Indicates if water is safe to drink (binary variable).                   | ![Potability Distribution](Data_Distributions/Potability_distribution.png)    |
@@ -23,14 +23,14 @@ For most multivariable statistic applications, our data must be normal. We have 
 
 | Parameter                     | p-value           | Normality (p > 0.05) | Q-Q Plot |
 |--------------------------------|-------------------|----------------------|----------|
-| pH                             | 0.279             | True                 | ![Q_Q_plot_for_pH](Q_Q_plots_for_normality/Q_Q_plot_for_pH.png) |
+| pH                             | 0.279             | True                 | ![Q_Q_plot_for_pH](Q_Q_plots_for_normality/Q_Q_plot_for_ph.png) |
 | Hardness                       | 0.056             | True                 | ![Q_Q_plot_for_Hardness](Q_Q_plots_for_normality/Q_Q_plot_for_Hardness.png) |
 | Solids                         | 0.000             | False                | ![Q_Q_plot_for_Solids](Q_Q_plots_for_normality/Q_Q_plot_for_Solids.png) |
 | Solids (sqrt transformed)      | 0.679             | True                 | ![Q_Q_plot_for_Solids_sqrt_transformed](Q_Q_plots_for_normality/Q_Q_plot_for_Solids_sqrt_transformed.png) |
 | Chloramines                    | 0.271             | True                 | ![Q_Q_plot_for_Chloramines](Q_Q_plots_for_normality/Q_Q_plot_for_Chloramines.png) |
 | Sulfate                        | 0.082             | True                 | ![Q_Q_plot_for_Sulfate](Q_Q_plots_for_normality/Q_Q_plot_for_Sulfate.png) |
 | Conductivity                   | 0.071             | True                 | ![Q_Q_plot_for_Conductivity](Q_Q_plots_for_normality/Q_Q_plot_for_Conductivity.png) |
-| Organic Carbon                 | 0.845             | True                 | ![Q_Q_plot_for_Organic_Carbon](Q_Q_plots_for_normality/Q_Q_plot_for_Organic_Carbon.png) |
+| Organic Carbon                 | 0.845             | True                 | ![Q_Q_plot_for_Organic_Carbon](Q_Q_plots_for_normality/Q_Q_plot_for_Organic_carbon.png) |
 | Trihalomethanes                | 0.129             | True                 | ![Q_Q_plot_for_Trihalomethanes](Q_Q_plots_for_normality/Q_Q_plot_for_Trihalomethanes.png) |
 | Turbidity                      | 0.876             | True                 | ![Q_Q_plot_for_Turbidity](Q_Q_plots_for_normality/Q_Q_plot_for_Turbidity.png) |
 
