@@ -46,6 +46,58 @@ The next step for the construction of our model is to divide the data into Train
 Since the Hotelling's T-squared test results show no significant differences between any of the sets, we can conclude that the data separation was successful, and the data appears to come from the same population.
 
 
+# Logistic Regression Analysis
+
+## Objective of Logistic Regression in Potability Analysis
+
+**Logistic regression** was used in this analysis to explore the relationship between water quality parameters and the potability variable, which indicates whether the water is safe for consumption or not. Logistic regression is particularly suitable for this case, as the potability variable is binary (0 for non-potable and 1 for potable). This model allows us to:
+
+- Assess the probability that the water is potable based on each water quality parameter.
+- Identify which variables have a greater impact on potability through their coefficients.
+
+## Logistic Regression Model
+
+The logistic regression model was fitted using the following parameters as predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable was **Potability**, treated as a binary variable.
+
+The logistic regression model equation is as follows:
+
+\[
+\text{Probability(Potability) } = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \cdot \text{pH} + \beta_2 \cdot \text{Hardness} + \ldots + \beta_n \cdot \text{Turbidity})}}
+\]
+
+## Model Results and Coefficients
+
+The following analysis highlights the most relevant results:
+
+- **[Chloramines and pH]**: These are the parameters with the highest positive effect per unit change on the probability of potability. Specifically, the coefficient for Chloramines is 1.566e-02, and the coefficient for pH is 7.321e-03. Although their effects are positive, their magnitude is relatively low, indicating that while they contribute to potability, they might not be the most determining factors in the model.
+
+In contrast, **[Turbidity and Organic Carbon]** are the variables with the highest negative impact, implying that higher values in these parameters reduce the probability that the water is potable. This is consistent with water quality knowledge, as high levels of turbidity and organic carbon may indicate the presence of particles or organic matter that reduce potability.
+
+This analysis suggests that a higher amount of Chloramines and an appropriate pH level contribute to water potability. Chloramines are commonly used to disinfect water, which may correlate with potability at safe levels. Similarly, a pH within a range of 6.5 to 8.5 is associated with potable water, while values outside this range may reduce potability.
+
+On the other hand, the variables that contribute the least are **[Hardness, Conductivity, and Sulfate]**, as they have coefficients closer to zero, indicating that they may have a minimal effect on potability prediction and can therefore be removed from the model.
+
+Additionally, to improve model performance, we applied PCA, selecting the components with the highest variability to enhance performance.
+
+## Model Evaluation
+
+To evaluate the performance of this logistic regression model, metrics such as **AUC (Area Under the ROC Curve)** were calculated, reflecting how well the model distinguishes between classes and predicts the probability of potability.
+
+In the graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives.
+
+### Potability Probability Distribution
+
+![Potability Probability Distribution](./distribucion_probabilidad_potabilidad.png)
+
+The graph shows the distribution of the probability of water potability for the two classes: "Non-potable" and "Potable."
+
+### Model ROC Curve
+
+![ROC Curve for Test Set](./curva_roc.png)
+
+This ROC curve shows the model's ability to distinguish between potable and non-potable water. An AUC close to 1 indicates a high level of discrimination, while in this case, the model may need adjustments to improve its accuracy.
+
+
 **References:**
 
 Centers for Disease Control and Prevention. (2024). About Water Disinfection with Chlorine and Chloramine. Retrived from [https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html](https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html)
