@@ -83,7 +83,7 @@ Additionally, to improve model performance, we applied PCA, selecting the compon
 
 To evaluate the performance of this logistic regression model, metrics such as **AUC (Area Under the ROC Curve)** were calculated, reflecting how well the model distinguishes between classes and predicts the probability of potability.
 
-In the graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives.
+In the next graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives, which is highly positive to see the good performance. 
 
 ### Potability Probability Distribution
 
