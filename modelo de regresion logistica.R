@@ -2,11 +2,13 @@
 library(dplyr)
 library(ggplot2)
 library(MASS)
+library(lava)
 library(caret)
 library(pROC) 
 library(Metrics)
 
-water_data <- read.csv("~/Desktop/universidad/quinto semestre/estadistica 2/poryecto final/water_potability.csv")
+#cambiar el camino al archivo dependiendo de donde lo guardaras
+water_data <- read.csv("Q_Q_plots_for_normality/water_potability.csv")
 View(water_data)
 
 # Transformación de la variable "Solids" (raíz cuadrada) para cumplir la normalidad
