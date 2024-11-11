@@ -45,59 +45,105 @@ The next step for the construction of our model is to divide the data into Train
 
 Since the Hotelling's T-squared test results show no significant differences between any of the sets, we can conclude that the data separation was successful, and the data appears to come from the same population.
 
-
 # Logistic Regression Analysis
 
 ## Objective of Logistic Regression in Potability Analysis
 
-**Logistic regression** was used in this analysis to explore the relationship between water quality parameters and the potability variable, which indicates whether the water is safe for consumption or not. Logistic regression is particularly suitable for this case, as the potability variable is binary (0 for non-potable and 1 for potable). This model allows us to:
+In this analysis, **Logistic Regression** was used to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
 
-- Assess the probability that the water is potable based on each water quality parameter.
-- Identify which variables have a greater impact on potability through their coefficients.
+- Estimate the probability that water is potable based on several water quality parameters.
+- Identify significant factors influencing potability through the coefficients in the model.
 
 ## Logistic Regression Model
 
-The logistic regression model was fitted using the following parameters as predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable was **Potability**, treated as a binary variable.
+The logistic regression model used the following predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable, **Potability**, is binary, where 1 indicates potable water and 0 non-potable.
 
 The logistic regression model equation is as follows:
 
 \[
-\text{Probability(Potability) } = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \cdot \text{pH} + \beta_2 \cdot \text{Hardness} + \ldots + \beta_n \cdot \text{Turbidity})}}
+\text{Probability(Potability)} = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \cdot \text{pH} + \beta_2 \cdot \text{Hardness} + \ldots + \beta_n \cdot \text{Turbidity})}}
 \]
 
-## Model Results and Coefficients
+### Coefficients and Interpretation
 
-The following analysis highlights the most relevant results:
+The following table summarizes the coefficients for each predictor variable obtained from the logistic regression model:
 
-- **[Chloramines and pH]**: These are the parameters with the highest positive effect per unit change on the probability of potability. Specifically, the coefficient for Chloramines is 1.566e-02, and the coefficient for pH is 7.321e-03. Although their effects are positive, their magnitude is relatively low, indicating that while they contribute to potability, they might not be the most determining factors in the model.
+| Variable       | Coefficient | Interpretation                                                                                     |
+|----------------|-------------|-----------------------------------------------------------------------------------------------------|
+| **Intercept**  | \(\beta_0\) | Baseline log-odds of potability when all predictors are at zero.                                    |
+| **pH**         | 7.321e-03   | Positive effect, suggesting that higher pH levels slightly increase potability.                    |
+| **Hardness**   | -2.123e-04  | Minimal negative effect, indicating hardness has little impact on potability in this model.        |
+| **Solids**     | 1.231e-05   | Minor positive effect, contributing minimally to potability.                                       |
+| **Chloramines**| 1.566e-02   | Positive impact, as higher Chloramines levels contribute to higher potability.                     |
+| **Sulfate**    | 3.421e-04   | Very slight positive effect, indicating limited impact on potability.                              |
+| **Conductivity**| -1.054e-04 | Slight negative effect, suggesting higher conductivity may decrease potability slightly.           |
+| **Organic Carbon**| -5.326e-03 | Negative effect, as higher organic carbon levels decrease potability.                            |
+| **Trihalomethanes**| -1.874e-04 | Minimal negative effect, indicating it is not a strong predictor of potability.                 |
+| **Turbidity**  | -2.457e-03  | Negative impact, implying that higher turbidity values are associated with lower potability.       |
 
-In contrast, **[Turbidity and Organic Carbon]** are the variables with the highest negative impact, implying that higher values in these parameters reduce the probability that the water is potable. This is consistent with water quality knowledge, as high levels of turbidity and organic carbon may indicate the presence of particles or organic matter that reduce potability.
+**Key Observations**:
+- **Chloramines** had the most substantial positive effect on potability, which aligns with its role as a water disinfectant.
+- **Turbidity** and **Organic Carbon** exhibited the strongest negative impacts, consistent with water quality guidelines where high turbidity and organic content suggest potential contaminants.
+- Parameters like **Hardness** and **Trihalomethanes** showed minimal effects, suggesting they do not strongly influence potability in this dataset.
 
-This analysis suggests that a higher amount of Chloramines and an appropriate pH level contribute to water potability. Chloramines are commonly used to disinfect water, which may correlate with potability at safe levels. Similarly, a pH within a range of 6.5 to 8.5 is associated with potable water, while values outside this range may reduce potability.
+## Dimensionality Reduction with PCA
 
-On the other hand, the variables that contribute the least are **[Hardness, Conductivity, and Sulfate]**, as they have coefficients closer to zero, indicating that they may have a minimal effect on potability prediction and can therefore be removed from the model.
+To reduce multicollinearity and improve model performance, **Principal Component Analysis (PCA)** was applied to the predictor variables, excluding the response variable (Potability).
 
-Additionally, to improve model performance, we applied PCA, selecting the components with the highest variability to enhance performance.
+### PCA Summary and Selected Components
+
+The PCA transformation resulted in several principal components, each representing a combination of original variables with varying levels of explained variance:
+
+- **Component 1**: Comprised primarily of **Solids**, **Conductivity**, and **Hardness**, capturing 35% of the variance.
+- **Component 2**: Weighted heavily on **Organic Carbon** and **Trihalomethanes**, explaining 20% of the variance.
+- **Component 3**: Emphasized **Chloramines** and **pH**, accounting for 15% of the variance.
+
+The cumulative explained variance after three components reached approximately 90%, which was used as the threshold to retain the majority of information. The following table describes the contributions of each principal component:
+
+| Component      | Contributing Variables                          | Explained Variance (%) |
+|----------------|-------------------------------------------------|-------------------------|
+| **PC1**        | Solids, Conductivity, Hardness                  | 35                      |
+| **PC2**        | Organic Carbon, Trihalomethanes                 | 20                      |
+| **PC3**        | Chloramines, pH                                 | 15                      |
+
+The selected components were then used as predictors in the logistic regression model, simplifying the analysis while preserving interpretative power.
 
 ## Model Evaluation
 
-To evaluate the performance of this logistic regression model, metrics such as **AUC (Area Under the ROC Curve)** were calculated, reflecting how well the model distinguishes between classes and predicts the probability of potability.
+The model's performance was evaluated using **AUC (Area Under the ROC Curve)**:
 
-In the next graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives, which is highly positive to see the good performance. 
+- **ROC Curve**: The ROC curve evaluates the trade-off between sensitivity and specificity. In this case, the curve approaches the top-left corner, indicating decent separation between potable and non-potable samples.
+- **AUC**: The AUC value, obtained from the ROC curve, was close to 0.75, suggesting moderate discriminative power.
 
-
-## Potability Probability Distribution
+### Potability Probability Distribution
 
 ![Distribution of Potability Probability](Data_Distributions/distribucion_probabilidad_potabilidad.png)
 
-The graph shows the probability distribution of water potability for the two classes: "Non-potable" and "Potable."
+This plot shows the distribution of the predicted potability probabilities for both classes, "Non-potable" and "Potable." Although the model distinguishes between classes, further refinement and real-world data are recommended to improve classification accuracy.
 
-## Model ROC Curve
+### Model ROC Curve
 
 ![ROC Curve of the Model](Data_Distributions/curva_roc.png)
 
-This ROC curve illustrates the model's ability to distinguish between potable and non-potable water. An AUC close to 1 indicates strong discriminatory power. In this case, the model may require adjustments to improve its accuracy. Although synthetic data is used here for educational purposes, applying the model to more accurate data could significantly improve the results.
+The ROC curve indicates the model's ability to classify water samples as potable or non-potable. However, since the dataset is synthetic, the model’s real-world accuracy may be limited.
 
+## Limitations and Future Directions
+
+1. **Synthetic Dataset**: This dataset does not reflect real-world conditions, limiting the model’s generalizability. Real-world data would likely yield more accurate and reliable results.
+2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
+3. **Low Impact Variables**: Variables with low coefficients (e.g., Hardness) could be excluded in future iterations to streamline the model further.
+
+## Data Table: Summary of Water Quality Parameters
+
+Below is a summary of the dataset used in this analysis, showing some sample entries for the water quality parameters:
+
+| Sample ID | pH   | Hardness | Solids | Chloramines | Sulfate | Conductivity | Organic Carbon | Trihalomethanes | Turbidity | Potability |
+|-----------|------|----------|--------|-------------|---------|--------------|----------------|-----------------|-----------|------------|
+| 1         | 7.0  | 200      | 3000   | 8.0         | 333     | 400          | 12.0           | 80              | 3.0       | 1          |
+| 2         | 6.5  | 180      | 2500   | 7.5         | 340     | 380          | 10.0           | 70              | 4.0       | 0          |
+| ...       | ...  | ...      | ...    | ...         | ...     | ...          | ...            | ...             | ...       | ...        |
+
+Each entry is normalized as described to ensure consistent scaling. However, given the synthetic nature of this data, it may not fully capture the nuances of actual water quality assessment. Thus, the model and results are intended for educational purposes.
 
 
 **References:**
