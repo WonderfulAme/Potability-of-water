@@ -73,9 +73,7 @@ The logistic regression model used the following predictor variables: **pH, Hard
 
 The logistic regression model equation is as follows:
 
-\[
-\text{Probability(Potability)} = \frac{1}{1 + e^{-(\beta_0 + \beta_1 \cdot \text{pH} + \beta_2 \cdot \text{Hardness} + \ldots + \beta_n \cdot \text{Turbidity})}}
-\]
+Probability(Potability) = 1 / (1 + exp(- (β0 + β1 * pH + β2 * Hardness + ... + βn * Turbidity)))
 
 ### Coefficients and Interpretation
 
