@@ -87,14 +87,14 @@ In the next graph, there is a tendency of the model toward the upper left corner
 
 ### Potability Probability Distribution
 
-![Distribution of Potability Probability](DataDistributions/probability_distribution.png)
+![Distribution of Potability Probability](Data_Distributions/probability_distribution.png)
 
 The graph shows the distribution of the probability of water potability for the two classes: "Non-potable" and "Potable."
 
 ### Model ROC Curve
 
 
-![ROC Curve of the Model](DataDistributions/roc_curve.png)
+![ROC Curve of the Model](Data_Distributions/roc_curve.png)
 
 This ROC curve illustrates the model's capability to distinguish between potable and non-potable water. An AUC close to 1 indicates strong discriminatory power, though, in this case, the model may require adjustments to enhance its accuracy. For educational purposes, non-real data is used here; however, applying the model to more accurate data could improve the results significantly.
 
