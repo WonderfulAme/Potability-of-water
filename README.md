@@ -160,7 +160,7 @@ Below is a sample of the dataset with the newly added `Risk_Category` column, sh
 
 ## Limitations and Future Directions
 
-1. **Synthetic Dataset**: This dataset does not reflect real-world conditions, limiting the model’s generalizability. Real-world data would likely yield more accurate and reliable results.
+1. **Synthetic Dataset**: This dataset does not reflect real-world conditions, limiting the model’s generalizability. Real-world data would likely yield more accurate and reliable results. There are some cases where the ph levels are 0.2 or 13, which are non potable ph levels yet they are marked as potable. The potable or non potable category is wrongly calculated/described, this affects the precision of the model. 
 2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
 3. **Low Impact Variables**: Variables with low coefficients (e.g., Hardness) could be excluded in future iterations to streamline the model further.
 
