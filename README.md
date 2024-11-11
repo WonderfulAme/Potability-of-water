@@ -95,7 +95,7 @@ The graph shows the distribution of the probability of water potability for the 
 
 ![ROC Curve for Test Set](./curva_roc.png)
 
-This ROC curve shows the model's ability to distinguish between potable and non-potable water. An AUC close to 1 indicates a high level of discrimination, while in this case, the model may need adjustments to improve its accuracy.
+This ROC curve illustrates the model's capability to distinguish between potable and non-potable water. An AUC close to 1 indicates strong discriminatory power, though, in this case, the model may require adjustments to enhance its accuracy. For educational purposes, non-real data is used here; however, applying the model to more accurate data could improve the results significantly.
 
 
 **References:**
