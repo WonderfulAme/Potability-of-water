@@ -56,6 +56,17 @@ In this analysis, **Logistic Regression** was applied to investigate the relatio
 
 This analysis helps understand how each water quality parameter contributes to potability, providing insights into which factors are most critical in determining water quality.
 
+# Logistic Regression Analysis
+
+## Objective of Logistic Regression in Potability Analysis
+
+In this analysis, **Logistic Regression** was applied to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
+
+- Estimate the probability that water is potable based on several water quality parameters.
+- Identify significant factors influencing potability through the coefficients in the model.
+
+This analysis helps understand how each water quality parameter contributes to potability, providing insights into which factors are most critical in determining water quality.
+
 ## Logistic Regression Model
 
 The logistic regression model used the following predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable, **Potability**, is binary, where 1 indicates potable water and 0 non-potable.
@@ -70,18 +81,18 @@ The logistic regression model equation is as follows:
 
 The following table summarizes the coefficients for each predictor variable obtained from the logistic regression model:
 
-| Variable       | Coefficient | Interpretation                                                                                     |
-|----------------|-------------|-----------------------------------------------------------------------------------------------------|
-| **Intercept**  | \(\beta_0\) | Baseline log-odds of potability when all predictors are at zero.                                    |
-| **pH**         | 7.321e-03   | Positive effect, suggesting that higher pH levels slightly increase potability.                    |
-| **Hardness**   | -2.123e-04  | Minimal negative effect, indicating hardness has little impact on potability in this model.        |
-| **Solids**     | 1.231e-05   | Minor positive effect, contributing minimally to potability.                                       |
-| **Chloramines**| 1.566e-02   | Positive impact, as higher Chloramines levels contribute to higher potability.                     |
-| **Sulfate**    | 3.421e-04   | Very slight positive effect, indicating limited impact on potability.                              |
-| **Conductivity**| -1.054e-04 | Slight negative effect, suggesting higher conductivity may decrease potability slightly.           |
-| **Organic Carbon**| -5.326e-03 | Negative effect, as higher organic carbon levels decrease potability.                            |
-| **Trihalomethanes**| -1.874e-04 | Minimal negative effect, indicating it is not a strong predictor of potability.                 |
-| **Turbidity**  | -2.457e-03  | Negative impact, implying that higher turbidity values are associated with lower potability.       |
+| Variable          | Coefficient | Interpretation                                                                                       |
+|-------------------|-------------|-------------------------------------------------------------------------------------------------------|
+| **Intercept**     | \(\beta_0\) | Baseline log-odds of potability when all predictors are at zero.                                      |
+| **pH**            | 7.321e-03   | Positive effect, suggesting that higher pH levels slightly increase potability.                      |
+| **Hardness**      | -2.123e-04  | Minimal negative effect, indicating hardness has little impact on potability in this model.          |
+| **Solids**        | 1.231e-05   | Minor positive effect, contributing minimally to potability.                                         |
+| **Chloramines**   | 1.566e-02   | Positive impact, as higher Chloramines levels contribute to higher potability.                       |
+| **Sulfate**       | 3.421e-04   | Very slight positive effect, indicating limited impact on potability.                                |
+| **Conductivity**  | -1.054e-04  | Slight negative effect, suggesting higher conductivity may decrease potability slightly.             |
+| **Organic Carbon**| -5.326e-03  | Negative effect, as higher organic carbon levels decrease potability.                                |
+| **Trihalomethanes**| -1.874e-04 | Minimal negative effect, indicating it is not a strong predictor of potability.                      |
+| **Turbidity**     | -2.457e-03  | Negative impact, implying that higher turbidity values are associated with lower potability.         |
 
 **Key Observations**:
 - **Chloramines** had the most substantial positive effect on potability, which aligns with its role as a water disinfectant.
@@ -133,11 +144,11 @@ The ROC curve indicates the model's ability to classify water samples as potable
 
 To assess water samples' potability, we categorized them into three risk levels based on the calculated percentiles of potability probability. The categories and their corresponding probability thresholds are shown in the table below:
 
-| Percentile | Potability Probability Threshold | Risk Category                |
-|------------|----------------------------------|------------------------------|
-| 33%        | ≤ `0.33`                         | **High Risk of Non-Potability** |
-| 33%-66%    | > `0.33` and ≤ `0.66`            | **Moderate Risk**          |
-| 66%        | > `0.66`                         | **Low Risk of Non-Potability**  |
+| Percentile | Potability Probability Threshold   | Risk Category                |
+|------------|------------------------------------|------------------------------|
+| 33%        | ≤ `0.33`                           | **High Risk of Non-Potability** |
+| 33%-66%    | > `0.33` and ≤ `0.66`              | **Moderate Risk**               |
+| 66%        | > `0.66`                           | **Low Risk of Non-Potability**  |
 
 This classification helps identify samples with higher or lower chances of being potable, aiding in risk assessment and potential decision-making processes.
 
