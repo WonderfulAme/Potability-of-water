@@ -181,8 +181,10 @@ To achieve a more accurate and reliable model, it would be essential to:
 3. **Incorporate Domain Knowledge**: Collaborating with experts in water quality could help set realistic ranges for each parameter, ensuring that the model’s predictions align with real-world standards for potability.
 
 In summary, the use of a synthetic dataset with erroneous values and incorrect labels significantly affects the performance and interpretability of the logistic regression model. Using real-world data with verified labels and realistic parameter ranges would likely yield more accurate and meaningful results, allowing for better application in practical water quality assessment scenarios. 
+
 2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
-3. **Low Impact Variables**: Variables with low coefficients (e.g., Hardness) could be excluded in future iterations to streamline the model further.
+
+3. **Low Impact Variables**: More variables with low coefficients could be excluded in future iterations to streamline the model further.
 
 **References:**
 
