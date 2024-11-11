@@ -160,7 +160,27 @@ Below is a sample of the dataset with the newly added `Risk_Category` column, sh
 
 ## Limitations and Future Directions
 
-1. **Synthetic Dataset**: This dataset does not reflect real-world conditions, limiting the model’s generalizability. Real-world data would likely yield more accurate and reliable results. There are some cases where the ph levels are 0.2 or 13, which are non potable ph levels yet they are marked as potable. The potable or non potable category is wrongly calculated/described, this affects the precision of the model. 
+1. **Synthetic Dataset**: 
+
+**Synthetic Dataset**: This dataset does not reflect real-world conditions, which significantly limits the model’s generalizability and accuracy. In a real-world context, water quality parameters like **pH, Chloramines, Organic Carbon, and Turbidity** would follow specific ranges based on environmental and regulatory standards. However, in this dataset, some values fall outside the normal ranges observed in potable water, suggesting unrealistic or erroneous data entries. For example:
+
+- There are cases where **pH levels are as low as 0.2 or as high as 13**, which are values typically incompatible with potable water. Despite this, these samples are marked as potable, indicating that the **potability labels** may have been assigned incorrectly or randomly.
+- Similar inconsistencies appear in other parameters, where high levels of **Turbidity** or **Organic Carbon**, which would usually indicate contamination, are marked as potable. This suggests that the dataset does not follow realistic water quality criteria.
+
+These inaccuracies in the dataset affect the **precision and reliability** of the model. Since logistic regression relies on identifying patterns in the relationship between predictors and the target variable, erroneous labels and extreme values introduce noise, making it difficult for the model to learn meaningful relationships.
+
+### Impact on Model Performance
+- **Reduced Predictive Power**: The unrealistic values and incorrect potability labels hinder the model’s ability to make accurate predictions. This results in a **low AUC (Area Under the ROC Curve)** and reduced accuracy, as the model is learning from misleading data.
+- **Poor Interpretability of Coefficients**: In logistic regression, the coefficients are used to understand the effect of each predictor on the likelihood of potability. However, when predictors like pH and Turbidity have values outside typical ranges, the coefficients become unreliable, and interpreting them in a real-world context is problematic.
+- **Overfitting or Underfitting Risks**: Due to the random and unrealistic nature of the data, the model may either overfit to noise or underfit, failing to capture any meaningful patterns. This further decreases the model's utility when applied to new or real-world data.
+
+### Recommendations for Improvement
+To achieve a more accurate and reliable model, it would be essential to:
+1. **Use Real-World Data**: Obtaining a dataset with verified water quality measurements and correct potability labels would allow the model to learn genuine relationships, significantly improving its accuracy and generalizability.
+2. **Implement Data Cleaning Procedures**: In cases where only partial real-world data is available, data cleaning techniques should be applied. This includes removing extreme outliers (such as pH values below 6.5 or above 8.5 for potable water) and correcting mislabeled entries to align with realistic water quality standards.
+3. **Incorporate Domain Knowledge**: Collaborating with experts in water quality could help set realistic ranges for each parameter, ensuring that the model’s predictions align with real-world standards for potability.
+
+In summary, the use of a synthetic dataset with erroneous values and incorrect labels significantly affects the performance and interpretability of the logistic regression model. Using real-world data with verified labels and realistic parameter ranges would likely yield more accurate and meaningful results, allowing for better application in practical water quality assessment scenarios. 
 2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
 3. **Low Impact Variables**: Variables with low coefficients (e.g., Hardness) could be excluded in future iterations to streamline the model further.
 
