@@ -85,18 +85,20 @@ To evaluate the performance of this logistic regression model, metrics such as *
 
 In the next graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives, which is highly positive to see the good performance. 
 
-### Potability Probability Distribution
+# Potability of Water
 
-![Distribution of Potability Probability](Data_Distributions/probability_distribution.png)
+## Potability Probability Distribution
 
-The graph shows the distribution of the probability of water potability for the two classes: "Non-potable" and "Potable."
+![Distribution of Potability Probability](Data_Distributions/distribucion_probabilidad_potabilidad.png)
 
-### Model ROC Curve
+The graph shows the probability distribution of water potability for the two classes: "Non-potable" and "Potable."
 
+## Model ROC Curve
 
-![ROC Curve of the Model](Data_Distributions/roc_curve.png)
+![ROC Curve of the Model](Data_Distributions/curva_roc.png)
 
-This ROC curve illustrates the model's capability to distinguish between potable and non-potable water. An AUC close to 1 indicates strong discriminatory power, though, in this case, the model may require adjustments to enhance its accuracy. For educational purposes, non-real data is used here; however, applying the model to more accurate data could improve the results significantly.
+This ROC curve illustrates the model's ability to distinguish between potable and non-potable water. An AUC close to 1 indicates strong discriminatory power. In this case, the model may require adjustments to improve its accuracy. Although synthetic data is used here for educational purposes, applying the model to more accurate data could significantly improve the results.
+
 
 
 **References:**
