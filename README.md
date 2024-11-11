@@ -71,10 +71,6 @@ This analysis helps understand how each water quality parameter contributes to p
 
 The logistic regression model used the following predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable, **Potability**, is binary, where 1 indicates potable water and 0 non-potable.
 
-The logistic regression model equation is as follows:
-
-Probability(Potability) = 1 / (1 + exp(- (β0 + β1 * pH + β2 * Hardness + ... + βn * Turbidity)))
-
 ### Coefficients and Interpretation
 
 The following table summarizes the coefficients for each predictor variable obtained from the logistic regression model:
