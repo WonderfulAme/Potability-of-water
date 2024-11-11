@@ -85,9 +85,6 @@ To evaluate the performance of this logistic regression model, metrics such as *
 
 In the next graph, there is a tendency of the model toward the upper left corner, indicating a high level of sensitivity and specificity, that is, a high percentage of true negatives and true positives, which is highly positive to see the good performance. 
 
-# Potability of Water
-
-# Potability of Water
 
 ## Potability Probability Distribution
 
