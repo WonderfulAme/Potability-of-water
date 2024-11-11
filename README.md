@@ -49,10 +49,12 @@ Since the Hotelling's T-squared test results show no significant differences bet
 
 ## Objective of Logistic Regression in Potability Analysis
 
-In this analysis, **Logistic Regression** was used to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
+In this analysis, **Logistic Regression** was applied to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
 
 - Estimate the probability that water is potable based on several water quality parameters.
 - Identify significant factors influencing potability through the coefficients in the model.
+
+This analysis helps understand how each water quality parameter contributes to potability, providing insights into which factors are most critical in determining water quality.
 
 ## Logistic Regression Model
 
@@ -127,24 +129,35 @@ This plot shows the distribution of the predicted potability probabilities for b
 
 The ROC curve indicates the model's ability to classify water samples as potable or non-potable. However, since the dataset is synthetic, the model’s real-world accuracy may be limited.
 
+## Potability Risk Categories Based on Percentiles
+
+To assess water samples' potability, we categorized them into three risk levels based on the calculated percentiles of potability probability. The categories and their corresponding probability thresholds are shown in the table below:
+
+| Percentile | Potability Probability Threshold | Risk Category                |
+|------------|----------------------------------|------------------------------|
+| 33%        | ≤ `0.33`                         | **High Risk of Non-Potability** |
+| 33%-66%    | > `0.33` and ≤ `0.66`            | **Moderate Risk**          |
+| 66%        | > `0.66`                         | **Low Risk of Non-Potability**  |
+
+This classification helps identify samples with higher or lower chances of being potable, aiding in risk assessment and potential decision-making processes.
+
+### Example of Classified Data
+
+Below is an example of the dataset with the newly added `Risk_Category` column, showing how each sample is categorized based on its probability of potability:
+
+| Sample ID | pH   | Hardness | Solids | Chloramines | Sulfate | Conductivity | Organic Carbon | Trihalomethanes | Turbidity | Potability | Probability of Potability | Risk Category             |
+|-----------|------|----------|--------|-------------|---------|--------------|----------------|-----------------|-----------|------------|---------------------------|----------------------------|
+| 1         | 7.0  | 200      | 3000   | 8.0         | 333     | 400          | 12.0           | 80              | 3.0       | 1          | 0.75                      | Low Risk of Non-Potability |
+| 2         | 6.5  | 180      | 2500   | 7.5         | 340     | 380          | 10.0           | 70              | 4.0       | 0          | 0.45                      | Moderate Risk              |
+| ...       | ...  | ...      | ...    | ...         | ...     | ...          | ...            | ...             | ...       | ...        | ...                       | ...                        |
+
 ## Limitations and Future Directions
 
 1. **Synthetic Dataset**: This dataset does not reflect real-world conditions, limiting the model’s generalizability. Real-world data would likely yield more accurate and reliable results.
 2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
 3. **Low Impact Variables**: Variables with low coefficients (e.g., Hardness) could be excluded in future iterations to streamline the model further.
 
-## Data Table: Summary of Water Quality Parameters
-
-Below is a summary of the dataset used in this analysis, showing some sample entries for the water quality parameters:
-
-| Sample ID | pH   | Hardness | Solids | Chloramines | Sulfate | Conductivity | Organic Carbon | Trihalomethanes | Turbidity | Potability |
-|-----------|------|----------|--------|-------------|---------|--------------|----------------|-----------------|-----------|------------|
-| 1         | 7.0  | 200      | 3000   | 8.0         | 333     | 400          | 12.0           | 80              | 3.0       | 1          |
-| 2         | 6.5  | 180      | 2500   | 7.5         | 340     | 380          | 10.0           | 70              | 4.0       | 0          |
-| ...       | ...  | ...      | ...    | ...         | ...     | ...          | ...            | ...             | ...       | ...        |
-
-Each entry is normalized as described to ensure consistent scaling. However, given the synthetic nature of this data, it may not fully capture the nuances of actual water quality assessment. Thus, the model and results are intended for educational purposes.
-
+For a more detailed view you go to the code. 
 
 **References:**
 
