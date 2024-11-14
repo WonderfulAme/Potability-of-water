@@ -1,206 +1,199 @@
-# Potability of water
-Ensuring access to potable water is a fundamental human right. Regrettably, 1 in 4 people lack access to clean water (Ritchie, Spooner, & Roser, 2019). Understanding the factors that contribute to water potability is crucial for educating the public and developing devices to identify potable water. This is why in this study we investigate the most important factors to take into account when deciding whether to drink or not to drink the water in a situation and develop a logistic regression model to predict this feature.
+# Potabilidad del agua
+Garantizar el acceso a agua potable es un derecho humano fundamental. Lamentablemente, 1 de cada 4 personas carece de acceso a agua limpia (Ritchie, Spooner, & Roser, 2019). Comprender los factores que contribuyen a la potabilidad del agua es crucial para educar al público y desarrollar dispositivos que identifiquen agua potable. Es por eso que en este estudio investigamos los factores más importantes a tener en cuenta al decidir si beber o no el agua en una situación determinada y desarrollamos un modelo de regresión logística para predecir esta característica.
 
-For this purpose, we used a database for 3276 different water bodies (Kadiwal, 2020). The form of the database is shown in Table 1, where the parameter, what it means, and the distribution of it in the database are presented.
+Para este propósito, utilizamos una base de datos de 3276 cuerpos de agua diferentes (Kadiwal, 2020). La forma de la base de datos se muestra en la Tabla 1, donde se presentan el parámetro, su significado y su distribución en la base de datos.
 
-## Table 1
-| **Parameter**        | **Description**                                                          | **Distribution**                                                              |
+## Tabla 1
+| **Parámetro**        | **Descripción**                                                          | **Distribución**                                                              |
 |----------------------|--------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **pH**               | Measures the acidity or alkalinity of water on a scale from 0 to 14. According to the World Health Organization, most drinking water has a pH range of approximately 6.5 to 8.5 (2007). | ![pH Distribution](Data_Distributions/ph_distribution.png)                    |
-| **Hardness**          | Measure in mg/L of the concentration of calcium and magnesium salts in water. The U.S. Geological Survey (2018) classifies water with hardness less than 60 mg/L as soft, 61-120 mg/L as moderately hard, 121-180 mg/L as hard, and more than 180 mg/L as very hard. | ![Hardness Distribution](Data_Distributions/Hardness_distribution.png)        |
-| **Solids**            | Total dissolved solids (TDS) in water in ppm. A high TDS means the water is highly mineralized. According to the Environmental Systems Research Institute (2016), the desirable limit for TDS in potable water is 500 mg/L and the maximum limit is 1000 mg/L. | ![Solids Distribution](Data_Distributions/Solids_distribution.png)            |
-| **Chloramines**       | Compounds of chlorine and ammonia in ppm used commonly to disinfect water. Chloramine levels up to 4 milligrams per liter are considered safe. (Centers for Disease Control and Prevention, 2024)              | ![Chloramines Distribution](Data_Distributions/Chloramines_distribution.png)  |
-| **Sulfate**           | Measure of sulfate ions in water in mg/L. The U.S. Environmental Protection Agency (EPA) recommends a secondary maximum contaminant level of less than 250 mg/L for sulfate in drinking water (2019). | ![Sulfate Distribution](Data_Distributions/Sulfate_distribution.png)          |
-| **Conductivity**      | Measure of water's ability to conduct electricity in μS/cm. According to the Environmental Systems Research Institute (2016) it should be less than 400 μS/cm. High conductivity levels may indicate a high concentration of dissolved salts. | ![Conductivity Distribution](Data_Distributions/Conductivity_distribution.png)|
-| **Organic Carbon**    | Measure of organic compounds in water in ppm. | ![Organic Carbon Distribution](Data_Distributions/Organic_carbon_distribution.png) |
-| **Trihalomethanes**   | Chemical compounds that can form during water chlorination in μg/L. | ![Trihalomethanes Distribution](Data_Distributions/Trihalomethanes_distribution.png)|
-| **Turbidity**         | Measure of water clarity in NTU (Nephelometric Turbidity Units). Turbidity indicates how clear or cloudy water is, which can be affected by the presence of suspended particles. | ![Turbidity Distribution](Data_Distributions/Turbidity_distribution.png)      |
-| **Potability**        | Indicates if water is safe to drink (binary variable).                   | ![Potability Distribution](Data_Distributions/Potability_distribution.png)    |
+| **pH**               | Mide la acidez o alcalinidad del agua en una escala de 0 a 14. Según la Organización Mundial de la Salud, la mayoría del agua potable tiene un rango de pH de aproximadamente 6.5 a 8.5 (2007). | ![Distribución de pH](Data_Distributions/ph_distribution.png)                    |
+| **Dureza**           | Medida en mg/L de la concentración de sales de calcio y magnesio en el agua. El Servicio Geológico de EE. UU. (2018) clasifica el agua con dureza inferior a 60 mg/L como blanda, de 61-120 mg/L como moderadamente dura, de 121-180 mg/L como dura y superior a 180 mg/L como muy dura. | ![Distribución de dureza](Data_Distributions/Hardness_distribution.png)        |
+| **Sólidos**          | Sólidos totales disueltos (TDS) en agua en ppm. Un TDS alto significa que el agua está altamente mineralizada. Según el Instituto de Investigación de Sistemas Ambientales (2016), el límite deseable de TDS en agua potable es 500 mg/L y el límite máximo es 1000 mg/L. | ![Distribución de sólidos](Data_Distributions/Solids_distribution.png)            |
+| **Cloraminas**       | Compuestos de cloro y amoníaco en ppm utilizados comúnmente para desinfectar el agua. Los niveles de cloraminas de hasta 4 miligramos por litro se consideran seguros (Centros para el Control y la Prevención de Enfermedades, 2024).              | ![Distribución de cloraminas](Data_Distributions/Chloramines_distribution.png)  |
+| **Sulfato**          | Medida de iones de sulfato en agua en mg/L. La Agencia de Protección Ambiental de EE. UU. (EPA) recomienda un nivel máximo secundario de contaminante de menos de 250 mg/L de sulfato en agua potable (2019). | ![Distribución de sulfato](Data_Distributions/Sulfate_distribution.png)          |
+| **Conductividad**    | Medida de la capacidad del agua para conducir electricidad en μS/cm. Según el Instituto de Investigación de Sistemas Ambientales (2016), debe ser inferior a 400 μS/cm. Los niveles altos de conductividad pueden indicar una alta concentración de sales disueltas. | ![Distribución de conductividad](Data_Distributions/Conductivity_distribution.png)|
+| **Carbono Orgánico** | Medida de compuestos orgánicos en agua en ppm. | ![Distribución de carbono orgánico](Data_Distributions/Organic_carbon_distribution.png) |
+| **Trihalometanos**   | Compuestos químicos que pueden formarse durante la cloración del agua en μg/L. | ![Distribución de trihalometanos](Data_Distributions/Trihalomethanes_distribution.png)|
+| **Turbidez**         | Medida de la claridad del agua en NTU (Unidades Nefelométricas de Turbidez). La turbidez indica cuán clara o turbia está el agua, lo cual puede verse afectado por la presencia de partículas suspendidas. | ![Distribución de turbidez](Data_Distributions/Turbidity_distribution.png)      |
+| **Potabilidad**      | Indica si el agua es segura para beber (variable binaria).                   | ![Distribución de potabilidad](Data_Distributions/Potability_distribution.png)    |
 
-For most multivariable statistic applications, our data must be normal. We have confirmed this fact by applying a Kolmogorov-Smirnov test where values are reported in Table 2. Q-Q plots of the data are also shown.
+Para la mayoría de las aplicaciones estadísticas multivariables, nuestros datos deben ser normales. Hemos confirmado este hecho aplicando una prueba de Kolmogorov-Smirnov cuyos valores se informan en la Tabla 2. También se muestran los gráficos Q-Q de los datos.
 
-### Table 2
+### Tabla 2
 
-| Parameter                     | p-value           | Normality (p > 0.05) | Q-Q Plot |
+| Parámetro                     | p-valor           | Normalidad (p > 0.05) | Gráfico Q-Q |
 |--------------------------------|-------------------|----------------------|----------|
-| pH                             | 0.279             | True                 | ![Q_Q_plot_for_pH](Q_Q_plots_for_normality/Q_Q_plot_for_ph.png) |
-| Hardness                       | 0.056             | True                 | ![Q_Q_plot_for_Hardness](Q_Q_plots_for_normality/Q_Q_plot_for_Hardness.png) |
-| Solids                         | 0.000             | False                | ![Q_Q_plot_for_Solids](Q_Q_plots_for_normality/Q_Q_plot_for_Solids.png) |
-| Solids (sqrt transformed)      | 0.679             | True                 | ![Q_Q_plot_for_Solids_sqrt_transformed](Q_Q_plots_for_normality/Q_Q_plot_for_Solids_sqrt_transformed.png) |
-| Chloramines                    | 0.271             | True                 | ![Q_Q_plot_for_Chloramines](Q_Q_plots_for_normality/Q_Q_plot_for_Chloramines.png) |
-| Sulfate                        | 0.082             | True                 | ![Q_Q_plot_for_Sulfate](Q_Q_plots_for_normality/Q_Q_plot_for_Sulfate.png) |
-| Conductivity                   | 0.071             | True                 | ![Q_Q_plot_for_Conductivity](Q_Q_plots_for_normality/Q_Q_plot_for_Conductivity.png) |
-| Organic Carbon                 | 0.845             | True                 | ![Q_Q_plot_for_Organic_Carbon](Q_Q_plots_for_normality/Q_Q_plot_for_Organic_carbon.png) |
-| Trihalomethanes                | 0.129             | True                 | ![Q_Q_plot_for_Trihalomethanes](Q_Q_plots_for_normality/Q_Q_plot_for_Trihalomethanes.png) |
-| Turbidity                      | 0.876             | True                 | ![Q_Q_plot_for_Turbidity](Q_Q_plots_for_normality/Q_Q_plot_for_Turbidity.png) |
+| pH                             | 0.279             | Verdadero            | ![Q_Q_plot_for_pH](Q_Q_plots_for_normality/Q_Q_plot_for_ph.png) |
+| Dureza                         | 0.056             | Verdadero            | ![Q_Q_plot_for_Hardness](Q_Q_plots_for_normality/Q_Q_plot_for_Hardness.png) |
+| Sólidos                        | 0.000             | Falso                | ![Q_Q_plot_for_Solids](Q_Q_plots_for_normality/Q_Q_plot_for_Solids.png) |
+| Sólidos (transformación raíz cuadrada) | 0.679  | Verdadero            | ![Q_Q_plot_for_Solids_sqrt_transformed](Q_Q_plots_for_normality/Q_Q_plot_for_Solids_sqrt_transformed.png) |
+| Cloraminas                     | 0.271             | Verdadero            | ![Q_Q_plot_for_Chloramines](Q_Q_plots_for_normality/Q_Q_plot_for_Chloramines.png) |
+| Sulfato                        | 0.082             | Verdadero            | ![Q_Q_plot_for_Sulfate](Q_Q_plots_for_normality/Q_Q_plot_for_Sulfate.png) |
+| Conductividad                  | 0.071             | Verdadero            | ![Q_Q_plot_for_Conductivity](Q_Q_plots_for_normality/Q_Q_plot_for_Conductivity.png) |
+| Carbono Orgánico               | 0.845             | Verdadero            | ![Q_Q_plot_for_Organic_Carbon](Q_Q_plots_for_normality/Q_Q_plot_for_Organic_carbon.png) |
+| Trihalometanos                 | 0.129             | Verdadero            | ![Q_Q_plot_for_Trihalomethanes](Q_Q_plots_for_normality/Q_Q_plot_for_Trihalomethanes.png) |
+| Turbidez                       | 0.876             | Verdadero            | ![Q_Q_plot_for_Turbidity](Q_Q_plots_for_normality/Q_Q_plot_for_Turbidity.png) |
 
-Note that the "Solids" variable did not follow a normal distribution initially, but after applying a square root transformation, it now conforms to a normal distribution. This transformed distribution will be used in the rest of the analysis as most tests require it to have this distribution.
-The next step for the construction of our model is to divide the data into Training, Test, and Validation sets. This division must ensure that the sets still come from the same population. We have confirmed this by implementing a Hotelling's T-squared test comparing the means of each dataset.
+Note que la variable "Sólidos" no seguía una distribución normal inicialmente, pero después de aplicar una transformación de raíz cuadrada, ahora se ajusta a una distribución normal. Esta distribución transformada se usará en el resto del análisis, ya que la mayoría de las pruebas lo requieren.
 
-- **Train vs Validation**: The T²-statistic of 13.034 and a p-value of 0.165 suggest that there is no statistically significant difference in the means between the training and validation sets (and we fail to reject the null hypothesis).
+El siguiente paso para la construcción de nuestro modelo es dividir los datos en conjuntos de Entrenamiento, Prueba y Validación. Esta división debe asegurar que los conjuntos provienen de la misma población. Esto se ha confirmado mediante la implementación de una prueba Hotelling's T-cuadrado comparando las medias de cada conjunto de datos.
 
-- **Train vs Test**: The T²-statistic of 7.799 and a p-value of 0.559 indicate no significant difference between the training and test sets.
+- **Entrenamiento vs Validación**: El estadístico T² de 13.034 y un valor p de 0.165 sugieren que no hay una diferencia estadísticamente significativa en las medias entre los conjuntos de entrenamiento y validación (y no rechazamos la hipótesis nula).
 
-- **Validation vs Test**: With a T²-statistic of 6.890 and a p-value of 0.656, the validation and test sets also do not exhibit a statistically significant difference.
+- **Entrenamiento vs Prueba**: El estadístico T² de 7.799 y un valor p de 0.559 indican que no hay una diferencia significativa entre los conjuntos de entrenamiento y prueba.
 
-Since the Hotelling's T-squared test results show no significant differences between any of the sets, we can conclude that the data separation was successful, and the data appears to come from the same population.
+- **Validación vs Prueba**: Con un estadístico T² de 6.890 y un valor p de 0.656, los conjuntos de validación y prueba tampoco muestran una diferencia estadísticamente significativa.
 
-# Logistic Regression Analysis
+Dado que los resultados de la prueba de Hotelling's T-cuadrado no muestran diferencias significativas entre ninguno de los conjuntos, podemos concluir que la separación de los datos fue exitosa y los datos parecen provenir de la misma población.
 
-## Objective of Logistic Regression in Potability Analysis
+# Análisis de Regresión Logística
 
-In this analysis, **Logistic Regression** was applied to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
+## Objetivo de la Regresión Logística en el Análisis de Potabilidad
 
-- Estimate the probability that water is potable based on several water quality parameters.
-- Identify significant factors influencing potability through the coefficients in the model.
+En este análisis, se aplicó **Regresión Logística** para investigar la relación entre los parámetros de calidad del agua y **Potabilidad**, indicando si el agua es segura para el consumo (1) o no (0). La regresión logística es ideal para esta clasificación binaria, lo que nos permite:
 
-This analysis helps understand how each water quality parameter contributes to potability, providing insights into which factors are most critical in determining water quality.
+- Estimar la probabilidad de que el agua sea potable en función de varios parámetros de calidad del agua.
+- Identificar factores significativos que influyen en la potabilidad a través de los coeficientes en el modelo.
 
-# Logistic Regression Analysis
+Este análisis ayuda a comprender cómo cada parámetro de calidad del agua contribuye a la potabilidad, proporcionando información sobre qué factores son más críticos para determinar la calidad del agua.
 
-## Objective of Logistic Regression in Potability Analysis
+## Modelo de Regresión Logística
 
-In this analysis, **Logistic Regression** was applied to investigate the relationship between water quality parameters and **Potability**, indicating whether water is safe for consumption (1) or not (0). Logistic regression is ideal for this binary classification, allowing us to:
+El modelo de regresión logística utilizó las siguientes variables predictoras: `pH`, `Dureza`, `Sólidos`, `Cloraminas`, `Sulfato`, `Conductividad`, `Carbono Orgánico`, `Trihalometanos` y `Turbidez`. Estos parámetros se transformaron según fue necesario para cumplir con los supuestos de normalidad y fueron estandarizados para el análisis.
 
-- Estimate the probability that water is potable based on several water quality parameters.
-- Identify significant factors influencing potability through the coefficients in the model.
+### Coeficientes e Interpretación
 
-This analysis helps understand how each water quality parameter contributes to potability, providing insights into which factors are most critical in determining water quality.
+La siguiente tabla resume los coeficientes para cada variable predictora obtenidos del modelo de regresión logística:
 
-## Logistic Regression Model
+| Variable            | Coeficiente | Interpretación                                                                                       |
+|---------------------|-------------|------------------------------------------------------------------------------------------------------|
+| **Intercepto**      | \(\beta_0\) | Logaritmo-odds de referencia de potabilidad cuando todos los predictores están en cero.             |
+| **pH**              | 7.321e-03   | Efecto positivo, lo que sugiere que niveles de pH más altos aumentan ligeramente la potabilidad.    |
+| **Dureza**          | -2.123e-04  | Efecto negativo mínimo, indicando que la dureza tiene poco impacto en la potabilidad en este modelo. |
+| **Sólidos**         | 1.231e-05   | Efecto positivo menor, contribuyendo mínimamente a la potabilidad.                                  |
+| **Cloraminas**      | 1.566e-02   | Impacto positivo, ya que niveles más altos de cloraminas contribuyen a una mayor potabilidad.       |
+| **Sulfato**         | 3.421e-04   | Efecto positivo muy leve, indicando un impacto limitado en la potabilidad.                          |
+| **Conductividad**   | -1.054e-04  | Efecto negativo leve, sugiriendo que mayor conductividad podría disminuir ligeramente la potabilidad.|
+| **Carbono Orgánico**| -5.326e-03  | Efecto negativo, ya que niveles más altos de carbono orgánico disminuyen la potabilidad.            |
+| **Trihalometanos**  | -1.874e-04  | Efecto negativo mínimo, indicando que no es un predictor fuerte de potabilidad.                     |
+| **Turbidez**        | -2.457e-03  | Impacto negativo, lo que implica que valores de turbidez más altos están asociados con menor potabilidad.|
 
-The logistic regression model used the following predictor variables: **pH, Hardness, Solids, Chloramines, Sulfate, Conductivity, Organic Carbon, Trihalomethanes, and Turbidity**. The dependent variable, **Potability**, is binary, where 1 indicates potable water and 0 non-potable.
+**Observaciones Clave**:
+- **Cloraminas** mostró el efecto positivo más significativo en la potabilidad, lo cual es consistente con su rol como desinfectante de agua.
+- **Turbidez** y **Carbono Orgánico** exhibieron los impactos negativos más fuertes, alineándose con las guías de calidad del agua, donde una alta turbidez y contenido orgánico sugieren contaminantes potenciales.
+- Parámetros como **Dureza** y **Trihalometanos** mostraron efectos mínimos, sugiriendo que no influyen fuertemente en la potabilidad en este conjunto de datos.
 
-### Coefficients and Interpretation
+## Reducción de Dimensionalidad con PCA
 
-The following table summarizes the coefficients for each predictor variable obtained from the logistic regression model:
+Para reducir la multicolinealidad y mejorar el rendimiento del modelo, se aplicó **Análisis de Componentes Principales (PCA)** a las variables predictoras, excluyendo la variable de respuesta (Potabilidad).
 
-| Variable          | Coefficient | Interpretation                                                                                       |
-|-------------------|-------------|-------------------------------------------------------------------------------------------------------|
-| **Intercept**     | \(\beta_0\) | Baseline log-odds of potability when all predictors are at zero.                                      |
-| **pH**            | 7.321e-03   | Positive effect, suggesting that higher pH levels slightly increase potability.                      |
-| **Hardness**      | -2.123e-04  | Minimal negative effect, indicating hardness has little impact on potability in this model.          |
-| **Solids**        | 1.231e-05   | Minor positive effect, contributing minimally to potability.                                         |
-| **Chloramines**   | 1.566e-02   | Positive impact, as higher Chloramines levels contribute to higher potability.                       |
-| **Sulfate**       | 3.421e-04   | Very slight positive effect, indicating limited impact on potability.                                |
-| **Conductivity**  | -1.054e-04  | Slight negative effect, suggesting higher conductivity may decrease potability slightly.             |
-| **Organic Carbon**| -5.326e-03  | Negative effect, as higher organic carbon levels decrease potability.                                |
-| **Trihalomethanes**| -1.874e-04 | Minimal negative effect, indicating it is not a strong predictor of potability.                      |
-| **Turbidity**     | -2.457e-03  | Negative impact, implying that higher turbidity values are associated with lower potability.         |
+### Resumen de PCA y Componentes Seleccionados
 
-**Key Observations**:
-- **Chloramines** had the most substantial positive effect on potability, which aligns with its role as a water disinfectant.
-- **Turbidity** and **Organic Carbon** exhibited the strongest negative impacts, consistent with water quality guidelines where high turbidity and organic content suggest potential contaminants.
-- Parameters like **Hardness** and **Trihalomethanes** showed minimal effects, suggesting they do not strongly influence potability in this dataset.
+La transformación PCA resultó en varios componentes principales, cada uno representando una combinación de variables originales con diferentes niveles de varianza explicada:
 
-## Dimensionality Reduction with PCA
+- **Componente 1**: Compuesto principalmente por **Sólidos**, **Conductividad** y **Dureza**, capturando el 35% de la varianza.
+- **Componente 2**: Ponderado principalmente en **Carbono Orgánico** y **Trihalometanos**, explicando el 20% de la varianza.
+- **Componente 3**: Enfatiza **Cloraminas** y **pH**, representando el 15% de la varianza.
 
-To reduce multicollinearity and improve model performance, **Principal Component Analysis (PCA)** was applied to the predictor variables, excluding the response variable (Potability).
+La varianza explicada acumulada después de tres componentes alcanzó aproximadamente el 90%, lo cual se usó como umbral para retener la mayor parte de la información. La siguiente tabla describe las contribuciones de cada componente principal:
 
-### PCA Summary and Selected Components
+| Componente | Variables Contribuyentes            | Varianza Explicada (%) |
+|------------|-------------------------------------|-------------------------|
+| **PC1**    | Sólidos, Conductividad, Dureza      | 35                      |
+| **PC2**    | Carbono Orgánico, Trihalometanos    | 20                      |
+| **PC3**    | Cloraminas, pH                      | 15                      |
 
-The PCA transformation resulted in several principal components, each representing a combination of original variables with varying levels of explained variance:
+Los componentes seleccionados fueron utilizados como predictores en el modelo de regresión logística, simplificando el análisis y preservando el poder interpretativo.
 
-- **Component 1**: Comprised primarily of **Solids**, **Conductivity**, and **Hardness**, capturing 35% of the variance.
-- **Component 2**: Weighted heavily on **Organic Carbon** and **Trihalomethanes**, explaining 20% of the variance.
-- **Component 3**: Emphasized **Chloramines** and **pH**, accounting for 15% of the variance.
+## Evaluación del Modelo
 
-The cumulative explained variance after three components reached approximately 90%, which was used as the threshold to retain the majority of information. The following table describes the contributions of each principal component:
+El rendimiento del modelo fue evaluado usando **AUC (Área bajo la curva ROC)**:
 
-| Component      | Contributing Variables                          | Explained Variance (%) |
-|----------------|-------------------------------------------------|-------------------------|
-| **PC1**        | Solids, Conductivity, Hardness                  | 35                      |
-| **PC2**        | Organic Carbon, Trihalomethanes                 | 20                      |
-| **PC3**        | Chloramines, pH                                 | 15                      |
+- **Curva ROC**: La curva ROC evalúa el equilibrio entre sensibilidad y especificidad. En este caso, la curva se aproxima a la esquina superior izquierda, indicando una separación decente entre muestras potables y no potables.
+- **AUC**: El valor AUC, obtenido de la curva ROC, fue cercano a 0.75, sugiriendo un poder discriminativo moderado.
 
-The selected components were then used as predictors in the logistic regression model, simplifying the analysis while preserving interpretative power.
+### Distribución de Probabilidad de Potabilidad
 
-## Model Evaluation
+![Distribución de Probabilidad de Potabilidad](Data_Distributions/distribucion_probabilidad_potabilidad.png)
 
-The model's performance was evaluated using **AUC (Area Under the ROC Curve)**:
+Este gráfico muestra la distribución de las probabilidades de potabilidad predichas para ambas clases, "No potable" y "Potable". Aunque el modelo distingue entre clases, se recomienda mayor refinamiento y datos reales para mejorar la precisión en la clasificación.
 
-- **ROC Curve**: The ROC curve evaluates the trade-off between sensitivity and specificity. In this case, the curve approaches the top-left corner, indicating decent separation between potable and non-potable samples.
-- **AUC**: The AUC value, obtained from the ROC curve, was close to 0.75, suggesting moderate discriminative power.
+### Curva ROC del Modelo
 
-### Potability Probability Distribution
+![Curva ROC del Modelo](Data_Distributions/curva_roc.png)
 
-![Distribution of Potability Probability](Data_Distributions/distribucion_probabilidad_potabilidad.png)
+La curva ROC indica la capacidad del modelo para clasificar muestras de agua como potables o no potables. Sin embargo, dado que el conjunto de datos es sintético, la precisión del modelo en el mundo real puede ser limitada.
 
-This plot shows the distribution of the predicted potability probabilities for both classes, "Non-potable" and "Potable." Although the model distinguishes between classes, further refinement and real-world data are recommended to improve classification accuracy.
+## Categorías de Riesgo de Potabilidad Basadas en Percentiles
 
-### Model ROC Curve
+Para evaluar la potabilidad de las muestras de agua, se las categorizó en tres niveles de riesgo basados en los percentiles calculados de probabilidad de potabilidad. Las categorías y sus umbrales de probabilidad correspondientes se muestran en la tabla a continuación:
 
-![ROC Curve of the Model](Data_Distributions/curva_roc.png)
+| Percentil | Umbral de Probabilidad de Potabilidad | Categoría de Riesgo              |
+|-----------|---------------------------------------|----------------------------------|
+| 33%       | ≤ `0.33`                              | **Alto Riesgo de No Potabilidad** |
+| 33%-66%   | > `0.33` y ≤ `0.66`                   | **Riesgo Moderado**              |
+| 66%       | > `0.66`                              | **Bajo Riesgo de No Potabilidad** |
 
-The ROC curve indicates the model's ability to classify water samples as potable or non-potable. However, since the dataset is synthetic, the model’s real-world accuracy may be limited.
+Esta clasificación ayuda a identificar muestras con mayor o menor probabilidad de ser potables, facilitando la evaluación de riesgos y los procesos de toma de decisiones.
 
-## Potability Risk Categories Based on Percentiles
+### Muestra de Datos Clasificados
 
-To assess water samples' potability, we categorized them into three risk levels based on the calculated percentiles of potability probability. The categories and their corresponding probability thresholds are shown in the table below:
+A continuación, se presenta una muestra del conjunto de datos con la columna `Categoría_Riesgo` recientemente añadida, mostrando un subconjunto de cómo cada muestra es clasificada según su probabilidad de potabilidad:
 
-| Percentile | Potability Probability Threshold   | Risk Category                |
-|------------|------------------------------------|------------------------------|
-| 33%        | ≤ `0.33`                           | **High Risk of Non-Potability** |
-| 33%-66%    | > `0.33` and ≤ `0.66`              | **Moderate Risk**               |
-| 66%        | > `0.66`                           | **Low Risk of Non-Potability**  |
+| ID de Muestra | pH   | Dureza | Sólidos | Cloraminas | Sulfato | Conductividad | Carbono Orgánico | Trihalometanos | Turbidez | Potabilidad | Probabilidad de Potabilidad | Categoría de Riesgo        |
+|---------------|------|--------|---------|------------|---------|---------------|-------------------|----------------|----------|-------------|-----------------------------|----------------------------|
+| 1             | 7.0  | 200    | 3000    | 8.0        | 333     | 400           | 12.0              | 80             | 3.0      | 1           | 0.75                        | Bajo Riesgo de No Potabilidad |
+| 2             | 6.5  | 180    | 2500    | 7.5        | 340     | 380           | 10.0              | 70             | 4.0      | 0           | 0.45                        | Riesgo Moderado            |
+| 3             | 7.2  | 200    | 3200    | 8.2        | 320     | 420           | 11.5              | 75             | 3.5      | 1           | 0.80                        | Bajo Riesgo de No Potabilidad |
+| 4             | 8.1  | 220    | 3100    | 7.8        | 310     | 410           | 12.1              | 72             | 3.2      | 0           | 0.30                        | Alto Riesgo de No Potabilidad |
+| 5             | 5.9  | 190    | 2900    | 7.0        | 335     | 390           | 9.8               | 78             | 4.1      | 1           | 0.65                        | Riesgo Moderado            |
 
-This classification helps identify samples with higher or lower chances of being potable, aiding in risk assessment and potential decision-making processes.
+## Limitaciones y Futuras Direcciones
 
-### Sample of Classified Data
+1. **Conjunto de Datos Sintético**:
 
-Below is a sample of the dataset with the newly added `Risk_Category` column, showing a subset of how each sample is categorized based on its probability of potability:
+**Conjunto de Datos Sintético**: Este conjunto de datos no refleja condiciones del mundo real, lo que limita significativamente la generalización y precisión del modelo. En un contexto real, parámetros de calidad del agua como **pH, Cloraminas, Carbono Orgánico y Turbidez** seguirían rangos específicos basados en estándares ambientales y regulatorios. Sin embargo, en este conjunto de datos, algunos valores caen fuera de los rangos normales observados en agua potable, lo que sugiere la necesidad de ajustar y normalizar los valores de entrada para que sean representativos del agua potable.
 
-| Sample ID | pH   | Hardness | Solids | Chloramines | Sulfate | Conductivity | Organic Carbon | Trihalomethanes | Turbidity | Potability | Probability of Potability | Risk Category             |
-|-----------|------|----------|--------|-------------|---------|--------------|----------------|-----------------|-----------|------------|---------------------------|----------------------------|
-| 1         | 7.0  | 200      | 3000   | 8.0         | 333     | 400          | 12.0           | 80              | 3.0       | 1          | 0.75                      | Low Risk of Non-Potability |
-| 2         | 6.5  | 180      | 2500   | 7.5         | 340     | 380          | 10.0           | 70              | 4.0       | 0          | 0.45                      | Moderate Risk              |
-| 3         | 7.2  | 200      | 3200   | 8.2         | 320     | 420          | 11.5           | 75              | 3.5       | 1          | 0.80                      | Low Risk of Non-Potability |
-| 4         | 8.1  | 220      | 3100   | 7.8         | 310     | 410          | 12.1           | 72              | 3.2       | 0          | 0.30                      | High Risk of Non-Potability |
-| 5         | 5.9  | 190      | 2900   | 7.0         | 335     | 390          | 9.8            | 78              | 4.1       | 1          | 0.65                      | Moderate Risk              |
+**Cloraminas, Carbono Orgánico y Turbidez** seguirían rangos específicos basados en estándares ambientales y regulatorios. Sin embargo, en este conjunto de datos, algunos valores caen fuera de los rangos normales observados en agua potable, lo que sugiere entradas de datos erróneas o poco realistas. Por ejemplo:
 
-## Limitations and Future Directions
+- Hay casos donde los **niveles de pH son tan bajos como 0.2 o tan altos como 13**, valores que generalmente son incompatibles con el agua potable. A pesar de esto, estas muestras están marcadas como potables, lo que indica que las **etiquetas de potabilidad** pueden haber sido asignadas incorrectamente o de manera aleatoria.
+- Aparecen inconsistencias similares en otros parámetros, donde niveles altos de **Turbidez** o **Carbono Orgánico**, que normalmente indicarían contaminación, están marcados como potables. Esto sugiere que el conjunto de datos no sigue criterios realistas de calidad del agua.
 
-1. **Synthetic Dataset**: 
+Estas imprecisiones en el conjunto de datos afectan la **precisión y confiabilidad** del modelo. Dado que la regresión logística depende de identificar patrones en la relación entre los predictores y la variable objetivo, las etiquetas erróneas y los valores extremos introducen ruido, lo que dificulta que el modelo aprenda relaciones significativas.
 
-**Synthetic Dataset**: This dataset does not reflect real-world conditions, which significantly limits the model’s generalizability and accuracy. In a real-world context, water quality parameters like **pH, Chloramines, Organic Carbon, and Turbidity** would follow specific ranges based on environmental and regulatory standards. However, in this dataset, some values fall outside the normal ranges observed in potable water, suggesting unrealistic or erroneous data entries. For example:
+### Impacto en el Desempeño del Modelo
+- **Reducción del Poder Predictivo**: Los valores poco realistas y las etiquetas incorrectas de potabilidad dificultan la capacidad del modelo para hacer predicciones precisas. Esto resulta en un **AUC (Área Bajo la Curva ROC) bajo** y una menor precisión, ya que el modelo está aprendiendo a partir de datos engañosos.
+- **Pobre Interpretación de los Coeficientes**: En la regresión logística, los coeficientes se usan para entender el efecto de cada predictor sobre la probabilidad de potabilidad. Sin embargo, cuando los predictores como el pH y la turbidez tienen valores fuera de los rangos típicos, los coeficientes se vuelven poco confiables y la interpretación en un contexto real es problemática.
+- **Riesgos de Sobreajuste o Subajuste**: Debido a la naturaleza aleatoria y poco realista de los datos, el modelo puede sobreajustarse al ruido o subajustarse, fallando en capturar patrones significativos. Esto disminuye aún más la utilidad del modelo cuando se aplica a datos nuevos o del mundo real.
 
-- There are cases where **pH levels are as low as 0.2 or as high as 13**, which are values typically incompatible with potable water. Despite this, these samples are marked as potable, indicating that the **potability labels** may have been assigned incorrectly or randomly.
-- Similar inconsistencies appear in other parameters, where high levels of **Turbidity** or **Organic Carbon**, which would usually indicate contamination, are marked as potable. This suggests that the dataset does not follow realistic water quality criteria.
+### Recomendaciones para Mejorar
+Para lograr un modelo más preciso y confiable, sería esencial:
+1. **Usar Datos del Mundo Real**: Obtener un conjunto de datos con mediciones verificadas de calidad del agua y etiquetas correctas de potabilidad permitiría que el modelo aprenda relaciones genuinas, mejorando significativamente su precisión y capacidad de generalización.
+2. **Implementar Procedimientos de Limpieza de Datos**: En los casos donde solo se disponga de datos parciales del mundo real, se deben aplicar técnicas de limpieza de datos. Esto incluye eliminar valores extremos (como pH por debajo de 6.5 o por encima de 8.5 para agua potable) y corregir las entradas mal etiquetadas para alinearlas con los estándares realistas de calidad del agua.
+3. **Incorporar Conocimiento del Dominio**: Colaborar con expertos en calidad del agua podría ayudar a establecer rangos realistas para cada parámetro, asegurando que las predicciones del modelo estén alineadas con los estándares del mundo real para la potabilidad.
 
-These inaccuracies in the dataset affect the **precision and reliability** of the model. Since logistic regression relies on identifying patterns in the relationship between predictors and the target variable, erroneous labels and extreme values introduce noise, making it difficult for the model to learn meaningful relationships.
+En resumen, el uso de un conjunto de datos sintético con valores erróneos y etiquetas incorrectas afecta significativamente el desempeño y la interpretabilidad del modelo de regresión logística. Utilizar datos del mundo real con etiquetas verificadas y rangos de parámetros realistas probablemente generaría resultados más precisos y significativos, permitiendo una mejor aplicación en escenarios prácticos de evaluación de calidad del agua.
 
-### Impact on Model Performance
-- **Reduced Predictive Power**: The unrealistic values and incorrect potability labels hinder the model’s ability to make accurate predictions. This results in a **low AUC (Area Under the ROC Curve)** and reduced accuracy, as the model is learning from misleading data.
-- **Poor Interpretability of Coefficients**: In logistic regression, the coefficients are used to understand the effect of each predictor on the likelihood of potability. However, when predictors like pH and Turbidity have values outside typical ranges, the coefficients become unreliable, and interpreting them in a real-world context is problematic.
-- **Overfitting or Underfitting Risks**: Due to the random and unrealistic nature of the data, the model may either overfit to noise or underfit, failing to capture any meaningful patterns. This further decreases the model's utility when applied to new or real-world data.
+2. **Modelo PCA Simplificado**: Aunque se utilizó PCA para simplificar el modelo, mantener las características originales podría proporcionar una mayor riqueza interpretativa en un contexto real.
 
-### Recommendations for Improvement
-To achieve a more accurate and reliable model, it would be essential to:
-1. **Use Real-World Data**: Obtaining a dataset with verified water quality measurements and correct potability labels would allow the model to learn genuine relationships, significantly improving its accuracy and generalizability.
-2. **Implement Data Cleaning Procedures**: In cases where only partial real-world data is available, data cleaning techniques should be applied. This includes removing extreme outliers (such as pH values below 6.5 or above 8.5 for potable water) and correcting mislabeled entries to align with realistic water quality standards.
-3. **Incorporate Domain Knowledge**: Collaborating with experts in water quality could help set realistic ranges for each parameter, ensuring that the model’s predictions align with real-world standards for potability.
+3. **Variables de Bajo Impacto**: En futuras iteraciones, podrían excluirse más variables con coeficientes bajos para agilizar aún más el modelo.
 
-In summary, the use of a synthetic dataset with erroneous values and incorrect labels significantly affects the performance and interpretability of the logistic regression model. Using real-world data with verified labels and realistic parameter ranges would likely yield more accurate and meaningful results, allowing for better application in practical water quality assessment scenarios. 
+**Referencias:**
 
-2. **Simplified PCA Model**: While PCA was used to simplify the model, retaining the raw features might provide richer interpretive insights in a real-world context.
+Centers for Disease Control and Prevention. (2024). About Water Disinfection with Chlorine and Chloramine. Recuperado de [https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html](https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html)
 
-3. **Low Impact Variables**: More variables with low coefficients could be excluded in future iterations to streamline the model further.
+World Health Organization. (2007). pH in Drinking-water: Revised background document for development of WHO Guidelines for Drinking-water Quality. Recuperado de [https://cdn.who.int/media/docs/default-source/wash-documents/wash-chemicals/ph.pdf?sfvrsn=16b10656_4](https://cdn.who.int/media/docs/default-source/wash-documents/wash-chemicals/ph.pdf?sfvrsn=16b10656_4).
 
-**References:**
+Kadiwal, A. (2020). Water Potability. *Kaggle*. Recuperado de [https://www.kaggle.com/datasets/adityakadiwal/water-potability](https://www.kaggle.com/datasets/adityakadiwal/water-potability).
 
-Centers for Disease Control and Prevention. (2024). About Water Disinfection with Chlorine and Chloramine. Retrived from [https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html](https://www.cdc.gov/drinking-water/about/about-water-disinfection-with-chlorine-and-chloramine.html)
+Ritchie, H., Spooner, F., & Roser, M. (2019). Clean Water. *Our World in Data*. Recuperado de [https://ourworldindata.org/clean-water](https://ourworldindata.org/clean-water).
 
-World Health Organization. (2007). pH in Drinking-water: Revised background document for development of WHO Guidelines for Drinking-water Quality. Retrieved from [https://cdn.who.int/media/docs/default-source/wash-documents/wash-chemicals/ph.pdf?sfvrsn=16b10656_4](https://cdn.who.int/media/docs/default-source/wash-documents/wash-chemicals/ph.pdf?sfvrsn=16b10656_4).
+U.S. Geological Survey. (n.d.). Hardness of Water. Recuperado de [https://www.usgs.gov/special-topics/water-science-school/science/hardness-water](https://www.usgs.gov/special-topics/water-science-school/science/hardness-water).
 
-Kadiwal, A. (2020). Water Potability. *Kaggle*. Retrieved from [https://www.kaggle.com/datasets/adityakadiwal/water-potability](https://www.kaggle.com/datasets/adityakadiwal/water-potability).
+Environmental Systems Research Institute. (2016). Drinking water quality assessment and its effects on residents health in Wondo genet campus, Ethiopia. Recuperado de [https://environmentalsystemsresearch.springeropen.com/articles/10.1186/s40068-016-0053-6](https://environmentalsystemsresearch.springeropen.com/articles/10.1186/s40068-016-0053-6).
 
-Ritchie, H., Spooner, F., & Roser, M. (2019). Clean Water. *Our World in Data*. Retrieved from [https://ourworldindata.org/clean-water](https://ourworldindata.org/clean-water).
+U.S. Environmental Protection Agency. (n.d.). Conductivity | Monitoring & Assessment. Recuperado de [https://archive.epa.gov/water/archive/web/html/vms59.html] (https://archive.epa.gov/water/archive/web/html/vms59.html)
 
-U.S. Geological Survey. (n.d.). Hardness of Water. Retrieved from [https://www.usgs.gov/special-topics/water-science-school/science/hardness-water](https://www.usgs.gov/special-topics/water-science-school/science/hardness-water).
+U.S. Environmental Protection Agency. (2024). Secondary Drinking Water Standards: Guidance for Nuisance Chemicals. Recuperado de [https://www.epa.gov/sdwa/secondary-drinking-water-standards-guidance-nuisance-chemicals](https://www.epa.gov/sdwa/secondary-drinking-water-standards-guidance-nuisance-chemicals)
 
-Environmental Systems Research Institute. (2016). Drinking water quality assessment and its effects on residents health in Wondo genet campus, Ethiopia. Retrieved from [https://environmentalsystemsresearch.springeropen.com/articles/10.1186/s40068-016-0053-6](https://environmentalsystemsresearch.springeropen.com/articles/10.1186/s40068-016-0053-6).
-
-U.S. Environmental Protection Agency. (n.d.). Conductivity | Monitoring & Assessment. Retrieved from [https://archive.epa.gov/water/archive/web/html/vms59.html] (https://archive.epa.gov/water/archive/web/html/vms59.html)
-
-U.S. Environmental Protection Agency. (2024). Secondary Drinking Water Standards: Guidance for Nuisance Chemicals. Retrieved from [https://www.epa.gov/sdwa/secondary-drinking-water-standards-guidance-nuisance-chemicals](https://www.epa.gov/sdwa/secondary-drinking-water-standards-guidance-nuisance-chemicals)
 
