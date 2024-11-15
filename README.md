@@ -131,7 +131,7 @@ Para evaluar la potabilidad de las muestras de agua, se las categorizó en tres 
 | Percentil | Umbral de Probabilidad de Potabilidad | Categoría de Riesgo              |
 |-----------|---------------------------------------|----------------------------------|
 | 33%       | ≤ `0.33`                              | **Alto Riesgo de No Potabilidad** |
-| 33%-66%   | > `0.33` y ≤ `0.66`                   | **Riesgo Moderado**              |
+| 33%-66%   | > `0.33` y ≤ `0.66`                   | **Riesgo Moderado de No Podabilidad**              |
 | 66%       | > `0.66`                              | **Bajo Riesgo de No Potabilidad** |
 
 Esta clasificación ayuda a identificar muestras con mayor o menor probabilidad de ser potables, facilitando la evaluación de riesgos y los procesos de toma de decisiones.
@@ -166,7 +166,7 @@ Estas imprecisiones en el conjunto de datos afectan la **precisión y confiabili
 - **Pobre Interpretación de los Coeficientes**: En la regresión logística, los coeficientes se usan para entender el efecto de cada predictor sobre la probabilidad de potabilidad. Sin embargo, cuando los predictores como el pH y la turbidez tienen valores fuera de los rangos típicos, los coeficientes se vuelven poco confiables y la interpretación en un contexto real es problemática.
 - **Riesgos de Sobreajuste o Subajuste**: Debido a la naturaleza aleatoria y poco realista de los datos, el modelo puede sobreajustarse al ruido o subajustarse, fallando en capturar patrones significativos. Esto disminuye aún más la utilidad del modelo cuando se aplica a datos nuevos o del mundo real.
 
-### Recomendaciones para Mejorar
+### Recomendaciones para Mejorar el Modelo
 Para lograr un modelo más preciso y confiable, sería esencial:
 1. **Usar Datos del Mundo Real**: Obtener un conjunto de datos con mediciones verificadas de calidad del agua y etiquetas correctas de potabilidad permitiría que el modelo aprenda relaciones genuinas, mejorando significativamente su precisión y capacidad de generalización.
 2. **Implementar Procedimientos de Limpieza de Datos**: En los casos donde solo se disponga de datos parciales del mundo real, se deben aplicar técnicas de limpieza de datos. Esto incluye eliminar valores extremos (como pH por debajo de 6.5 o por encima de 8.5 para agua potable) y corregir las entradas mal etiquetadas para alinearlas con los estándares realistas de calidad del agua.
